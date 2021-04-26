@@ -1,0 +1,31 @@
+$def with(storage)
+<div class='block' id='moving-preview' style='position:absolute; width: 180px; height: 180px;'></div>
+<div class='block' id='battlemap-container'>
+    <canvas id='main' width=800 height=800> </canvas>
+    <script>
+        setupBattlemapVars();
+        drawGrid();
+        registerClickEvent();
+        getUnitsFromServer();
+
+        //var serverUpdateLooper = window.setInterval(function(){sendChangesToServer();}, 1000);
+        var clientUpdateLooper = window.setInterval(function(){getUnitsFromServer();}, 1000);
+    </script>
+</div>
+
+<div class='block' id='info-container'>
+    <span>$'ngrok: ' $storage['ngrok']</span> <br />
+    <span>
+        <span id='id'></span>
+        <button style='display:inline' onclick="resetId()">reset id</button>
+    </span>
+
+    <script>
+        document.getElementById('id').innerHTML = 'id: ' + getCookie('id') + ' ';
+        function resetId() {
+            var request = new XMLHttpRequest();
+            request.open('GET', '/?cookieclear=1', true);
+            request.send();
+        }
+    </script>
+</div>
